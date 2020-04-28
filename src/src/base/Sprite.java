@@ -16,7 +16,6 @@ public class Sprite {
     }
 
     public Sprite(String name, int width, int height) {
-        image = new Image("file:resources/" + name);
         image = new Image("file:resources/" + name, width, height, false, false);
     }
 
@@ -28,10 +27,10 @@ public class Sprite {
         var res = new Vector2i();
         if (imageHeight > imageWidth) {
             res.y = scale;
-            res.x = imageWidth / imageHeight * scale;
+            res.x = (int) (imageWidth / (double) imageHeight * scale);
         } else {
             res.x = scale;
-            res.y = imageHeight / imageWidth * scale;
+            res.y = (int) (imageHeight / (double) imageWidth * scale);
         }
         return res;
     }
