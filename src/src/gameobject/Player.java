@@ -10,7 +10,7 @@ import src.observer.Observer;
 
 public class Player extends GameObject implements Observer {
     Movement movement;
-
+public Gun gun = new Gun();
     public Player() {
         movement = new Movement(this);
     }
@@ -21,6 +21,8 @@ public class Player extends GameObject implements Observer {
         size.x = renderer.getSprite().getSize().x;
         size.y = renderer.getSprite().getSize().y;
 
+        gun.getPos().x = pos.x;
+        gun.getPos().y = pos.y-10;
         renderer.getPos().x = pos.x;
         renderer.getPos().y = pos.y;
         collider.getPos().x = pos.x;
@@ -47,6 +49,8 @@ public class Player extends GameObject implements Observer {
         if (pos.x <= 0) pos.x = 2;
         if (pos.x >= 800) pos.x = 800;
 
+        gun.getPos().x = pos.x;
+        gun.getPos().y = pos.y-10;
         renderer.getPos().x = pos.x;
         renderer.getPos().y = pos.y;
         collider.getPos().x = pos.x;
@@ -56,6 +60,7 @@ public class Player extends GameObject implements Observer {
     @Override
     public void draw() {
         renderer.draw();
+        gun.draw();
     }
 
     @Override

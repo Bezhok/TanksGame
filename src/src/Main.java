@@ -53,7 +53,7 @@ public class Main extends Application {
         gameObjects.add(wall2);
         inputHandler = new InputHandler(theScene);
         inputHandler.add(player);
-
+player.gun.setGc(gc);
         for (var obj : gameObjects) {
             obj.getRenderer().setGc(gc);
             obj.start();
