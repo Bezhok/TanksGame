@@ -40,4 +40,16 @@ public class Collider {
     {
         return another.getBoundary().intersects(getBoundary());
     }
+
+    public boolean collided() {
+        for (var collider: colliders) {
+            if (collider != this) {
+                if (this.intersects(collider)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
