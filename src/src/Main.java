@@ -25,6 +25,7 @@ public class Main extends Application {
         launch(args);
     }
 
+    InputHandler inputHandler;
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Canvas Example");
@@ -39,7 +40,7 @@ public class Main extends Application {
 
         Player player = new Player();
         Block wall = new Block();
-        player.setPos(new Vector2d(200, 320));
+        player.setPos(new Vector2d(200, height / 2+35));
         wall.setPos(new Vector2d(width / 2.0, height * 2.0 / 3 + 100));
         wall.setSize(new Vector2d(width, height / 2.0));
 
@@ -50,6 +51,8 @@ public class Main extends Application {
         gameObjects.add(player);
         gameObjects.add(wall);
         gameObjects.add(wall2);
+        inputHandler = new InputHandler(theScene);
+        inputHandler.add(player);
 
         for (var obj : gameObjects) {
             obj.getRenderer().setGc(gc);

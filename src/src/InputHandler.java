@@ -1,7 +1,7 @@
 package src;
 
-import javafx.event.Event;
 import javafx.scene.Scene;
+import src.base.InputEvent;
 import src.observer.Observer;
 import src.observer.Subject;
 
@@ -13,7 +13,20 @@ public class InputHandler implements Subject {
 
     public InputHandler(Scene scene) {
         this.scene = scene;
-        scene.setOnKeyReleased(this::notifyAll);
+
+        scene.setOnKeyPressed(e -> {
+            var inputEvent = new InputEvent();
+            inputEvent.isStart = true;
+            inputEvent.keyEvent = e;
+            notifyAll(inputEvent);
+        });
+
+        scene.setOnKeyReleased(e -> {
+            var inputEvent = new InputEvent();
+            inputEvent.isEnd = true;
+            inputEvent.keyEvent = e;
+            notifyAll(inputEvent);
+        });
     }
 
     @Override
@@ -27,7 +40,7 @@ public class InputHandler implements Subject {
     }
 
     @Override
-    public void notifyAll(Event event) {
+    public void notifyAll(InputEvent event) {
         for (var observer : observers) {
             observer.onNotify(event);
         }

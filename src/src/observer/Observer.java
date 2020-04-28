@@ -1,7 +1,7 @@
 package src.observer;
 
-import javafx.event.Event;
+import src.base.InputEvent;
 
 public interface Observer {
-    void onNotify(Event event);
+    void onNotify(InputEvent event);
 }
