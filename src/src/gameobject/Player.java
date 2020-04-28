@@ -68,6 +68,14 @@ public Gun gun = new Gun();
         var keyEvent = event.keyEvent;
         switch (keyEvent.getCode()) {
             case W:
+                if (event.isStart) {
+                    gun.updateAngle(-0.05);
+                }
+                break;
+            case S:
+                if (event.isStart) {
+                    gun.updateAngle(0.05);
+                }
                 break;
             case A:
                 if (event.isStart) {
@@ -76,8 +84,6 @@ public Gun gun = new Gun();
                     movement.getAcceleration().x = 0;
 //                    movement.getVelocity().x = 0;
                 }
-                break;
-            case S:
                 break;
             case D:
                 if (event.isStart) {
