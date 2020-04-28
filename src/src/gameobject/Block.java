@@ -9,12 +9,13 @@ public class Block extends GameObject {
     public void start() {
         renderer.setSprite(new Sprite("wall.jpg", (int)size.x, (int)size.y));
 
-        renderer.getPos().x = pos.x;
-        renderer.getPos().y = pos.y;
-        collider.getPos().x = pos.x;
-        collider.getPos().y = pos.y;
-        collider.getSize().x = size.x;
-        collider.getSize().y = size.y;
+        updateComponentsPos();
+        collider.getSize().copy(size);
+    }
+
+    private void updateComponentsPos() {
+        renderer.getPos().copy(pos);
+        collider.getPos().copy(pos);
     }
 
     @Override

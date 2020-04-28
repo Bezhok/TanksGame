@@ -1,7 +1,6 @@
 package src.gameobject;
 
-import javafx.event.Event;
-import javafx.scene.input.KeyEvent;
+import src.Main;
 import src.base.InputEvent;
 import src.base.Movement;
 import src.base.Sprite;
@@ -9,10 +8,17 @@ import src.base.Vector2d;
 import src.observer.Observer;
 
 public class Player extends GameObject implements Observer {
-    Movement movement;
-public Gun gun = new Gun();
+    public Gun gun = new Gun();
+    private Movement movement;
+
     public Player() {
         movement = new Movement(this);
+    }
+
+    private void updateComponentsPos() {
+        gun.getPos().update(pos.x, pos.y - 10);
+        renderer.getPos().copy(pos);
+        collider.getPos().copy(pos);
     }
 
     @Override
@@ -21,22 +27,15 @@ public Gun gun = new Gun();
         size.x = renderer.getSprite().getSize().x;
         size.y = renderer.getSprite().getSize().y;
 
-        gun.getPos().x = pos.x;
-        gun.getPos().y = pos.y-10;
-        renderer.getPos().x = pos.x;
-        renderer.getPos().y = pos.y;
-        collider.getPos().x = pos.x;
-        collider.getPos().y = pos.y;
-        collider.getSize().x = size.x;
-        collider.getSize().y = size.y;
+        updateComponentsPos();
+        collider.getSize().copy(size);
     }
 
     @Override
     public void update(double dTime) {
         var prev = new Vector2d(pos.x, pos.y);
-        var prevVel = new Vector2d( movement.getVelocity().x,  movement.getVelocity().y);
+        var prevVel = new Vector2d(movement.getVelocity().x, movement.getVelocity().y);
 
-//        System.out.println(movement.getVelocity().x);
         movement.moveX(dTime);
         if (collider.collided()) {
             pos = prev;
@@ -46,15 +45,10 @@ public Gun gun = new Gun();
             movement.getVelocity().x = 0;
         }
 
-        if (pos.x <= 0) pos.x = 2;
+        if (pos.x <= 0) pos.x = 1;
         if (pos.x >= 800) pos.x = 800;
 
-        gun.getPos().x = pos.x;
-        gun.getPos().y = pos.y-10;
-        renderer.getPos().x = pos.x;
-        renderer.getPos().y = pos.y;
-        collider.getPos().x = pos.x;
-        collider.getPos().y = pos.y;
+        updateComponentsPos();
     }
 
     @Override
@@ -82,7 +76,6 @@ public Gun gun = new Gun();
                     movement.getAcceleration().x = -500;
                 } else {
                     movement.getAcceleration().x = 0;
-//                    movement.getVelocity().x = 0;
                 }
                 break;
             case D:
@@ -90,10 +83,28 @@ public Gun gun = new Gun();
                     movement.getAcceleration().x = 500;
                 } else {
                     movement.getAcceleration().x = 0;
-//                    movement.getVelocity().x = 0;
                 }
                 break;
-
+            case C:
+                if (event.isEnd)
+                    makeShot();
+                break;
         }
+    }
+
+    private void makeShot() {
+        Bullet bullet = new Bullet();
+Main.gameObjects.add(bullet);
+
+        var bulletStartPoint = new Vector2d(gun.getPos().x, gun.getPos().y);
+        bulletStartPoint.x += gun.getDir().x*gun.getGunLen();
+        bulletStartPoint.y += gun.getDir().y*gun.getGunLen();
+
+        bullet.setPos(bulletStartPoint);
+        bullet.setStartVelocity(gun.getDir());
+
+        bullet.getRenderer().setGc(Main.gc);
+
+        bullet.start();
     }
 }
