@@ -6,16 +6,20 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import src.base.Vector2d;
+import src.gameobject.Block;
+import src.gameobject.GameObject;
+import src.gameobject.Player;
+
+import java.util.ArrayList;
 
 public class Main extends Application {
 
     GraphicsContext gc;
     int width = 800;
     int height = 600;
+    ArrayList<GameObject> gameObjects = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -33,22 +37,25 @@ public class Main extends Application {
         root.getChildren().add(canvas);
         gc = canvas.getGraphicsContext2D();
 
-        gc.setFill(Color.RED);
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(2);
-        Font theFont = Font.font("Times New Roman", FontWeight.BOLD, 48);
-        gc.setFont(theFont);
-        gc.fillText("Hello, World!", 60, 50);
-        gc.strokeText("Hello, World!", 60, 50);
+        Player player = new Player();
+        Block wall = new Block();
+        player.setPos(new Vector2d(200, 50));
+        wall.setPos(new Vector2d(width / 2.0, height * 2.0 / 3 + 100));
+        wall.setSize(new Vector2d(width, height / 2.0));
+        gameObjects.add(player);
+        gameObjects.add(wall);
+
+        for (var obj : gameObjects) {
+            obj.getRenderer().setGc(gc);
+            obj.start();
+        }
+
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 update(currentNanoTime);
             }
         }.start();
-
-//        Image earth = new Image( "earth.png" );
-//        gc.drawImage( earth, 180, 100 );
 
         stage.show();
     }
@@ -57,6 +64,13 @@ public class Main extends Application {
         // Clear the canvas
         gc.clearRect(0, 0, width, height);
 
+        for (var obj : gameObjects) {
+            obj.update(currentNanoTime / 1000000000.0);
+        }
+
+        for (var obj : gameObjects) {
+            obj.draw();
+        }
 
     }
 }
