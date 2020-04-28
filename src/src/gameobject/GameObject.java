@@ -2,7 +2,10 @@ package src.gameobject;
 
 import javafx.geometry.Point2D;
 
-public class GameObject {
+public abstract class GameObject {
     Point2D position;
     Point2D size;
+
+    abstract void update(double dTime);
+    abstract void draw();
 }
