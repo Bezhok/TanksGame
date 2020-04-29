@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import src.base.Collider;
 import src.base.Vector2d;
 import src.gameobject.Block;
 import src.gameobject.GameObject;
@@ -75,8 +76,6 @@ public class Main extends Application {
     }
 
     void update(double dTime) {
-        // Clear the canvas
-//        System.out.println(dTime);
         gc.clearRect(0, 0, width, height);
 
         for (var obj : gameObjects) {
@@ -87,5 +86,7 @@ public class Main extends Application {
             obj.draw();
         }
 
+        gameObjects.removeIf(gameObject -> gameObject.wasDestroyed());
+        Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
     }
 }

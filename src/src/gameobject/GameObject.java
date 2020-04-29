@@ -6,7 +6,7 @@ import src.base.Vector2d;
 import src.base.Vector2i;
 
 public abstract class GameObject {
-    Vector2d pos = new Vector2d();
+    protected Vector2d pos = new Vector2d();
 
     public Vector2d getPos() {
         return pos;
@@ -24,6 +24,12 @@ public abstract class GameObject {
 
     }
 
+    public boolean wasDestroyed() {
+        return wasDestroyed;
+    }
+
+    protected boolean wasDestroyed = false;
+    public void onCollision(Collider another) {}
 
     public GameObject(Vector2d pos) {
         this.pos = pos;
@@ -34,7 +40,7 @@ public abstract class GameObject {
     }
 
     Vector2d size = new Vector2d();
-    Collider collider = new Collider();
+    Collider collider = new Collider(this);
 
     public Renderer getRenderer() {
         return renderer;

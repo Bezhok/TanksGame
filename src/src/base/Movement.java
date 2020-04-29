@@ -37,8 +37,6 @@ public class Movement {
 
     public void setVelocity(Vector2d velocity) {
         this.velocity = velocity;
-
-        System.out.println(velocity.x + " " + velocity.y + " " + velocity.y/velocity.x);
     }
 
     public Vector2d getAcceleration() {

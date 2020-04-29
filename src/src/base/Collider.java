@@ -1,14 +1,20 @@
 package src.base;
 
-import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import src.gameobject.GameObject;
 
 import java.util.ArrayList;
 
 public class Collider {
     Vector2d pos = new Vector2d();
     Vector2d size = new Vector2d();
+    GameObject gameObject;
 
+    public Collider(GameObject gameObject) {
+        this.gameObject = gameObject;
+
+        colliders.add(this);
+    }
 
     public Vector2d getPos() {
         return pos;
@@ -26,9 +32,14 @@ public class Collider {
         this.size = size;
     }
 
+    public static ArrayList<Collider> getColliders() {
+        return colliders;
+    }
+
     static ArrayList<Collider> colliders = new ArrayList<>();
-    public Collider() {
-        colliders.add(this);
+
+    public GameObject getGameObject() {
+        return gameObject;
     }
 
     public Rectangle2D getBoundary()
@@ -42,14 +53,19 @@ public class Collider {
     }
 
     public boolean collided() {
+        boolean wasCollision = false;
         for (var collider: colliders) {
             if (collider != this) {
                 if (this.intersects(collider)) {
-                    return true;
+                    collider.gameObject.onCollision(this);
+                    gameObject.onCollision(collider);
+
+                    wasCollision = true;
                 }
             }
         }
 
-        return false;
+        Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
+        return wasCollision;
     }
 }
