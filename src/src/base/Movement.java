@@ -27,14 +27,15 @@ public class Movement {
     public double moveY(double dTime) {
         if (dTime > 1) dTime = 1;
 
-        double deltaY = dTime*acceleration.y;
-        velocity.y += deltaY;
+
+        velocity.y += dTime*acceleration.y;
 
         // check vector len not this stupid thing
         if (velocity.y > maxSpeed.y) velocity.y = maxSpeed.y;
         if (velocity.y < -maxSpeed.y) velocity.y = -maxSpeed.y;
 
-        gameObject.getPos().y += dTime*velocity.y;
+        double deltaY = dTime*velocity.y;
+        gameObject.getPos().y += deltaY;
 
         return deltaY;
     }
@@ -54,14 +55,15 @@ public class Movement {
     public double moveX(double dTime) {
         if (dTime > 0.02) dTime = 0.02;
 
-        double deltaX = dTime*acceleration.x-velocity.x*resistance;
-        velocity.x += deltaX;
+
+        velocity.x += dTime*acceleration.x-velocity.x*resistance;
 
         // check vector len not this stupid thing
         if (velocity.x > maxSpeed.x) velocity.x = maxSpeed.x;
         if (velocity.x < -maxSpeed.x) velocity.x = -maxSpeed.x;
 
-        gameObject.getPos().x += dTime*velocity.x;
+        double deltaX = dTime*velocity.x;
+        gameObject.getPos().x += deltaX;
 
         return deltaX;
     }

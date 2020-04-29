@@ -41,10 +41,10 @@ public class Tank extends GameObject {
             movement.setVelocity(prevVel);
 
             if (deltaX > 0) {
-                pos.x -= 1;
+                pos.x -= 1;//deltaX/2;
             }
             else if (deltaX < 0) {
-                pos.x += 1;
+                pos.x += 1;//deltaX/2;
             }
 
             movement.getVelocity().x = 0;
