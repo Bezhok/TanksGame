@@ -21,11 +21,20 @@ public abstract class GameObject {
     }
 
     public GameObject() {
+        collider =  new Collider(this);
+    }
 
+    public GameObject(boolean shouldCreateCollider) {
+        if (shouldCreateCollider)
+            collider =  new Collider(this);
     }
 
     public boolean wasDestroyed() {
         return wasDestroyed;
+    }
+
+    void destroy() {
+        wasDestroyed = true;
     }
 
     protected boolean wasDestroyed = false;
@@ -40,7 +49,7 @@ public abstract class GameObject {
     }
 
     Vector2d size = new Vector2d();
-    Collider collider = new Collider(this);
+    Collider collider ;
 
     public Renderer getRenderer() {
         return renderer;

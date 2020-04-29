@@ -25,6 +25,7 @@ public class Main extends Application {
 
     // TODO bad realisation
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public static ArrayList<GameObject> temporyGameObjects = new ArrayList<>();
     InputHandler inputHandler;
 
     public static void main(String[] args) {
@@ -88,6 +89,10 @@ public class Main extends Application {
     void update(double dTime) {
         gc.clearRect(0, 0, width, height);
 
+        for (var obj: temporyGameObjects) {
+            obj.update(dTime);
+        }
+
         for (var obj : gameObjects) {
             obj.update(dTime);
         }
@@ -96,7 +101,12 @@ public class Main extends Application {
             obj.draw();
         }
 
-        gameObjects.removeIf(gameObject -> gameObject.wasDestroyed());
+        for (var obj: temporyGameObjects) {
+            obj.draw();
+        }
+
+        temporyGameObjects.removeIf(GameObject::wasDestroyed);
+        gameObjects.removeIf(GameObject::wasDestroyed);
         Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
     }
 }
