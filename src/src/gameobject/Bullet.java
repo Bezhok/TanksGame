@@ -25,7 +25,7 @@ public class Bullet extends GameObject {
 
     @Override
     public void start() {
-        renderer.setSprite(new Sprite("wall.jpg", 5, 5));
+        renderer.setSprite(new Sprite("bullet.png", 10));
 
         updateComponentsPos();
         collider.getSize().copy(new Vector2d(5, 5));

@@ -48,4 +48,8 @@ public class Sprite {
         }
         return res;
     }
+
+    public void setSize(Vector2i size) {
+        this.size = size;
+    }
 }
