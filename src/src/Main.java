@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import src.base.Collider;
 import src.base.Vector2d;
 import src.gameobject.Block;
+import src.gameobject.Enemy;
 import src.gameobject.GameObject;
 import src.gameobject.Player;
 
@@ -42,9 +43,15 @@ public class Main extends Application {
         root.getChildren().add(canvas);
         gc = canvas.getGraphicsContext2D();
 
+        Enemy enemy = new Enemy();
+        enemy.setPos(new Vector2d(600, height / 2 + 35));
+        enemy.gun.setGc(gc);
+
         Player player = new Player();
-        Block wall = new Block();
         player.setPos(new Vector2d(200, height / 2 + 35));
+        player.gun.setGc(gc);
+
+        Block wall = new Block();
         wall.setPos(new Vector2d(width / 2.0, height * 2.0 / 3 + 100));
         wall.setSize(new Vector2d(width, height / 2.0));
 
@@ -53,11 +60,14 @@ public class Main extends Application {
         wall2.setSize(new Vector2d(20, height * 2.0 / 4.0));
 
         gameObjects.add(player);
+        gameObjects.add(enemy);
         gameObjects.add(wall);
         gameObjects.add(wall2);
+
         inputHandler = new InputHandler(theScene);
         inputHandler.add(player);
-        player.gun.setGc(gc);
+
+
         for (var obj : gameObjects) {
             obj.getRenderer().setGc(gc);
             obj.start();

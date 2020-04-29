@@ -1,13 +1,5 @@
 package src.gameobject;
 
-public class Enemy extends GameObject {
-    @Override
-    public void update(double dTime) {
+public class Enemy extends Tank {
 
-    }
-
-    @Override
-    public void draw() {
-
-    }
 }

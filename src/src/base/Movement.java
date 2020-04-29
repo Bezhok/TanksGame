@@ -24,15 +24,19 @@ public class Movement {
         this.gameObject = gameObject;
     }
 
-    public void moveY(double dTime) {
+    public double moveY(double dTime) {
         if (dTime > 1) dTime = 1;
-        velocity.y += dTime*acceleration.y;
+
+        double deltaY = dTime*acceleration.y;
+        velocity.y += deltaY;
 
         // check vector len not this stupid thing
         if (velocity.y > maxSpeed.y) velocity.y = maxSpeed.y;
         if (velocity.y < -maxSpeed.y) velocity.y = -maxSpeed.y;
 
         gameObject.getPos().y += dTime*velocity.y;
+
+        return deltaY;
     }
 
     public void setVelocity(Vector2d velocity) {
@@ -47,15 +51,18 @@ public class Movement {
         return velocity;
     }
 
-    public void moveX(double dTime) {
+    public double moveX(double dTime) {
         if (dTime > 0.02) dTime = 0.02;
 
-        velocity.x += dTime*acceleration.x-velocity.x*resistance;
+        double deltaX = dTime*acceleration.x-velocity.x*resistance;
+        velocity.x += deltaX;
 
         // check vector len not this stupid thing
         if (velocity.x > maxSpeed.x) velocity.x = maxSpeed.x;
         if (velocity.x < -maxSpeed.x) velocity.x = -maxSpeed.x;
 
         gameObject.getPos().x += dTime*velocity.x;
+
+        return deltaX;
     }
 }
