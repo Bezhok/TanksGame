@@ -11,6 +11,10 @@ public class Renderer {
         return pos;
     }
 
+    public GraphicsContext getGc() {
+        return gc;
+    }
+
     public void setPos(Vector2d pos) {
         this.pos = pos;
     }
