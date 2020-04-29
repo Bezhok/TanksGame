@@ -48,7 +48,7 @@ public class Main extends Application {
         enemy.gun.setGc(gc);
 
         Player player = new Player();
-        player.setPos(new Vector2d(200, height / 2 + 35));
+        player.setPos(new Vector2d(500, height / 2 + 35));
         player.gun.setGc(gc);
 
         Block wall = new Block();

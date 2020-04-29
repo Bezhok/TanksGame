@@ -32,19 +32,16 @@ public class Tank extends GameObject {
     }
 
     protected void updateMovement(double dTime) {
-        var prev = new Vector2d(pos.x, pos.y);
         var prevVel = new Vector2d(movement.getVelocity().x, movement.getVelocity().y);
 
         double deltaX = movement.moveX(dTime);
         if (collider.collided()) {
-            pos = prev;
             movement.setVelocity(prevVel);
-
             if (deltaX > 0) {
-                pos.x -= 1;//deltaX/2;
+                pos.x -= deltaX+2;
             }
             else if (deltaX < 0) {
-                pos.x += 1;//deltaX/2;
+                pos.x += deltaX+2;
             }
 
             movement.getVelocity().x = 0;
