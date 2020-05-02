@@ -1,24 +1,21 @@
 package src.gameobject;
 
 import src.Main;
-import src.base.Collider;
-import src.base.Movement;
-import src.base.Sprite;
-import src.base.Vector2d;
+import src.base.*;
 
-public class Tank extends GameObject {
+public class Tank extends GameObject implements BulletGenerator {
     public Gun gun = new Gun();
-
-    public Movement getMovement() {
-        return movement;
-    }
-
     protected Movement movement;
     protected Health health;
+    double power = 350;
 
 
     public Tank() {
         movement = new Movement(this);
+    }
+
+    public Movement getMovement() {
+        return movement;
     }
 
     private void updateComponentsPos() {
@@ -45,14 +42,26 @@ public class Tank extends GameObject {
         var prevVel = new Vector2d(movement.getVelocity().x, movement.getVelocity().y);
 
         double deltaX = movement.moveX(dTime);
-        if (collider.collided()) {
-            movement.setVelocity(prevVel);
-            if (deltaX > 0) {
-                pos.x -= deltaX + 2;
-            } else if (deltaX < 0) {
-                pos.x += deltaX + 2;
-            }
 
+        var collidedWith = collider.collided();
+        boolean isCollided = false;
+
+        for (var c : collidedWith) {
+            if (!(c instanceof Bullet)) {
+                isCollided = true;
+                Collider aCollider = c.collider;
+
+                if (collider.getPos().x < aCollider.getPos().x) {
+                    pos.x = aCollider.
+                            getPos().x - aCollider.getSize().x / 2 - collider.getSize().x / 2;
+                } else if (collider.getPos().x > aCollider.getPos().x) {
+                    pos.x = aCollider.getPos().x + aCollider.getSize().x / 2 + collider.getSize().x / 2;
+                }
+            }
+        }
+
+        if (isCollided) {
+            movement.setVelocity(prevVel);
             movement.getVelocity().x = 0;
         }
 
@@ -77,8 +86,6 @@ public class Tank extends GameObject {
         health.draw();
     }
 
-    double power = 350;
-
     public double getPower() {
         return power;
     }
@@ -100,6 +107,7 @@ public class Tank extends GameObject {
 
         bullet.getRenderer().setGc(Main.gc);
 
+        bullet.setCreator(this);
         bullet.start();
     }
 
@@ -111,6 +119,10 @@ public class Tank extends GameObject {
 
         }
 
+    }
+
+    @Override
+    public void onBulletDestroyed(Bullet bullet) {
     }
 
     public void destroy() {

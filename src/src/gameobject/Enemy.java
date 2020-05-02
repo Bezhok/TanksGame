@@ -11,14 +11,20 @@ public class Enemy extends Tank {
         super();
         this.target = target;
         ai = new AI(this);
-
+        ai.setTarget(target);
+//        gun.setAngle(-2);
         gun.updateAngle(-2);
+    }
+
+    @Override
+    public void onBulletDestroyed(Bullet bullet) {
+        ai.onBulletDestroyed(bullet);
     }
 
     @Override
     public void update(double dTime) {
         super.update(dTime);
 
-        ai.update(dTime, target);
+        ai.update(dTime);
     }
 }

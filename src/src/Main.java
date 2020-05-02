@@ -48,17 +48,21 @@ public class Main extends Application {
 
 
         Player player = new Player();
-        player.setPos(new Vector2d(200, height / 2 + 35));
+        player.setPos(new Vector2d(400, height / 2 + 35));
         player.gun.setGc(gc);
 
         Enemy enemy = new Enemy(player);
         enemy.setPos(new Vector2d(800, height / 2 + 35));
         enemy.gun.setGc(gc);
 
-//        Enemy enemy2 = new Enemy(player);
-//        enemy2.setPos(new Vector2d(700, height / 2 + 35));
-//        enemy2.gun.setGc(gc);
-//        gameObjects.add(enemy2);
+        Enemy enemy2 = new Enemy(player);
+        enemy2.setPos(new Vector2d(500, height / 2 + 35));
+        enemy2.gun.setGc(gc);
+
+        Enemy enemy3 = new Enemy(player);
+        enemy3.setPos(new Vector2d(780, height / 2  - 150 - 25));
+        enemy3.gun.setGc(gc);
+        gameObjects.add(enemy3);
 
         Block wall = new Block();
         wall.setPos(new Vector2d(width / 2.0, height * 2.0 / 3 + 100));
@@ -66,13 +70,30 @@ public class Main extends Application {
 
         Block wall2 = new Block();
         wall2.setPos(new Vector2d(width / 2.0, height / 2));
-        wall2.setSize(new Vector2d(20, height * 2.0 / 4.0));
+        wall2.setSize(new Vector2d(20, height * 2.0 / 8.0));
 
-        gameObjects.add(player);
-        gameObjects.add(enemy);
+        Block wall3 = new Block();
+        wall3.setPos(new Vector2d(width / 2.0 + 150, height / 2));
+        wall3.setSize(new Vector2d(20, height * 2.0 / 8.0));
+        gameObjects.add(wall3);
+
+        Block wall4 = new Block();
+        wall4.setPos(new Vector2d(width / 2.0 + 360, height / 2  - 150));
+        wall4.setSize(new Vector2d(100, 20));
+        gameObjects.add(wall4);
+
+        Block wall5 = new Block();
+        wall5.setPos(new Vector2d(width / 2.0 + 310, height / 2  - 160));
+        wall5.setSize(new Vector2d(20, 40));
+        gameObjects.add(wall5);
 
         gameObjects.add(wall);
         gameObjects.add(wall2);
+
+        gameObjects.add(player);
+        gameObjects.add(enemy);
+        gameObjects.add(enemy2);
+
 
         inputHandler = new InputHandler(theScene);
         inputHandler.add(player);

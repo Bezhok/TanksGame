@@ -52,20 +52,23 @@ public class Collider {
         return another.getBoundary().intersects(getBoundary());
     }
 
-    public boolean collided() {
+    public ArrayList<GameObject> collided() {
         boolean wasCollision = false;
+        var collidedWith = new ArrayList<GameObject>();
         for (var collider: colliders) {
             if (collider != this) {
                 if (this.intersects(collider)) {
                     collider.gameObject.onCollision(this);
                     gameObject.onCollision(collider);
 
+                    collidedWith.add(collider.gameObject);
                     wasCollision = true;
                 }
             }
         }
 
         Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
-        return wasCollision;
+//        return wasCollision;
+        return collidedWith;
     }
 }

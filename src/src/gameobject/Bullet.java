@@ -1,13 +1,16 @@
 package src.gameobject;
 
 import src.Main;
-import src.base.Collider;
-import src.base.Movement;
-import src.base.Sprite;
-import src.base.Vector2d;
+import src.base.*;
 
 public class Bullet extends GameObject {
     private Movement movement;
+
+    public void setCreator(BulletGenerator creator) {
+        this.creator = creator;
+    }
+
+    private BulletGenerator creator;
 
     public void setStartVelocity(Vector2d vector2d, double power) {
 
@@ -39,12 +42,12 @@ public class Bullet extends GameObject {
     @Override
     public void update(double dTime) {
         movement.moveY(dTime);
-        if (collider.collided()) {
+        if (!collider.collided().isEmpty()) {
             movement.getVelocity().y = 0;
         }
 
         movement.moveX(dTime);
-        if (collider.collided()) {
+        if (!collider.collided().isEmpty()) {
             movement.getVelocity().x = 0;
         }
 
@@ -78,5 +81,9 @@ public class Bullet extends GameObject {
         temporaryEffect.getRenderer().setGc(Main.gc);
         temporaryEffect.start();
         Main.temporyGameObjects.add(temporaryEffect);
+
+        if (creator != null) {
+            creator.onBulletDestroyed(this);
+        }
     }
 }

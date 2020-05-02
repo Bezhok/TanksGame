@@ -25,7 +25,7 @@ public class Movement {
     }
 
     public double moveY(double dTime) {
-        if (dTime > 1) dTime = 1;
+        if (dTime > 0.02) dTime = 0.02;
 
 
         velocity.y += dTime*acceleration.y;
