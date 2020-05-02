@@ -10,16 +10,18 @@ import java.util.Random;
 public class TemporaryEffect extends GameObject {
     double lifeTimeSeconds;
 
-    public TemporaryEffect(Vector2d pos, double lifeTimeSeconds) {
+    int scale = 30;
+    public TemporaryEffect(Vector2d pos, double lifeTimeSeconds, int scale) {
         super(false);
         this.pos.copy(pos);
         this.lifeTimeSeconds = lifeTimeSeconds;
+        this.scale = scale;
     }
 
     int randomInt;
     @Override
     public void start() {
-        renderer.setSprite(new Sprite("explosion3.png", 30));
+        renderer.setSprite(new Sprite("explosion3.png", scale));
 
         renderer.getPos().copy(pos);
 

@@ -8,6 +8,11 @@ import src.base.Vector2d;
 
 public class Tank extends GameObject {
     public Gun gun = new Gun();
+
+    public Movement getMovement() {
+        return movement;
+    }
+
     protected Movement movement;
     protected Health health;
 
@@ -72,16 +77,26 @@ public class Tank extends GameObject {
         health.draw();
     }
 
-    protected void makeShot() {
+    double power = 350;
+
+    public double getPower() {
+        return power;
+    }
+
+    public void setPower(double power) {
+        this.power = power;
+    }
+
+    public void makeShot() {
         Bullet bullet = new Bullet();
-        Main.gameObjects.add(bullet);
+        Main.gameObjectsTemp.add(bullet);
 
         var bulletStartPoint = new Vector2d(gun.getPos().x, gun.getPos().y);
         bulletStartPoint.x += gun.getDir().x * gun.getGunLen();
         bulletStartPoint.y += gun.getDir().y * gun.getGunLen();
 
         bullet.setPos(bulletStartPoint);
-        bullet.setStartVelocity(gun.getDir());
+        bullet.setStartVelocity(gun.getDir(), power);
 
         bullet.getRenderer().setGc(Main.gc);
 
@@ -91,8 +106,19 @@ public class Tank extends GameObject {
     @Override
     public void onCollision(Collider other) {
         if (other.getGameObject() instanceof Bullet) {
+            System.out.println(health.curr);
             health.curr -= 10;
+
         }
 
+    }
+
+    public void destroy() {
+        super.destroy();
+
+        TemporaryEffect temporaryEffect = new TemporaryEffect(pos, 0.2, 100);
+        temporaryEffect.getRenderer().setGc(Main.gc);
+        temporaryEffect.start();
+        Main.temporyGameObjects.add(temporaryEffect);
     }
 }

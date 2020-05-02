@@ -9,8 +9,8 @@ import src.base.Vector2d;
 public class Bullet extends GameObject {
     private Movement movement;
 
-    public void setStartVelocity(Vector2d vector2d) {
-        double power = 350;
+    public void setStartVelocity(Vector2d vector2d, double power) {
+
         movement.setVelocity(new Vector2d(vector2d.x*power, vector2d.y*power));
     }
 
@@ -74,7 +74,7 @@ public class Bullet extends GameObject {
     void destroy() {
         super.destroy();
 
-        TemporaryEffect temporaryEffect = new TemporaryEffect(pos, 0.2);
+        TemporaryEffect temporaryEffect = new TemporaryEffect(pos, 0.2, 30);
         temporaryEffect.getRenderer().setGc(Main.gc);
         temporaryEffect.start();
         Main.temporyGameObjects.add(temporaryEffect);

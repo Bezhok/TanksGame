@@ -25,6 +25,7 @@ public class Main extends Application {
 
     // TODO bad realisation
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public static ArrayList<GameObject> gameObjectsTemp = new ArrayList<>();
     public static ArrayList<GameObject> temporyGameObjects = new ArrayList<>();
     InputHandler inputHandler;
 
@@ -44,13 +45,20 @@ public class Main extends Application {
         root.getChildren().add(canvas);
         gc = canvas.getGraphicsContext2D();
 
-        Enemy enemy = new Enemy();
-        enemy.setPos(new Vector2d(600, height / 2 + 35));
-        enemy.gun.setGc(gc);
+
 
         Player player = new Player();
-        player.setPos(new Vector2d(500, height / 2 + 35));
+        player.setPos(new Vector2d(200, height / 2 + 35));
         player.gun.setGc(gc);
+
+        Enemy enemy = new Enemy(player);
+        enemy.setPos(new Vector2d(800, height / 2 + 35));
+        enemy.gun.setGc(gc);
+
+//        Enemy enemy2 = new Enemy(player);
+//        enemy2.setPos(new Vector2d(700, height / 2 + 35));
+//        enemy2.gun.setGc(gc);
+//        gameObjects.add(enemy2);
 
         Block wall = new Block();
         wall.setPos(new Vector2d(width / 2.0, height * 2.0 / 3 + 100));
@@ -62,6 +70,7 @@ public class Main extends Application {
 
         gameObjects.add(player);
         gameObjects.add(enemy);
+
         gameObjects.add(wall);
         gameObjects.add(wall2);
 
@@ -105,6 +114,8 @@ public class Main extends Application {
             obj.draw();
         }
 
+        gameObjects.addAll(gameObjectsTemp);
+        gameObjectsTemp.clear();
         temporyGameObjects.removeIf(GameObject::wasDestroyed);
         gameObjects.removeIf(GameObject::wasDestroyed);
         Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
