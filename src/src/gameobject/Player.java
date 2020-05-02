@@ -37,6 +37,14 @@ public class Player extends Tank implements Observer {
                 if (event.isEnd)
                     makeShot();
                 break;
+            case Z:
+                if (event.isStart)
+                    setPower(power - 5);
+                break;
+            case X:
+                if (event.isStart)
+                    setPower(power + 5);
+                break;
         }
     }
 }

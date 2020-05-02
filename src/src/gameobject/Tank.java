@@ -91,7 +91,7 @@ public class Tank extends GameObject implements BulletGenerator {
     }
 
     public void setPower(double power) {
-        this.power = power;
+        this.power = Math.min(Math.max(power, 100), 500);
     }
 
     public void makeShot() {

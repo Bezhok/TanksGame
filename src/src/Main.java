@@ -32,7 +32,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+    Player player;
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Canvas Example");
@@ -47,7 +47,8 @@ public class Main extends Application {
 
 
 
-        Player player = new Player();
+
+        player = new Player();
         player.setPos(new Vector2d(400, height / 2 + 35));
         player.gun.setGc(gc);
 
@@ -134,6 +135,7 @@ public class Main extends Application {
         for (var obj: temporyGameObjects) {
             obj.draw();
         }
+        gc.fillText(Double.toString(player.getPower()), 10, 10);
 
         gameObjects.addAll(gameObjectsTemp);
         gameObjectsTemp.clear();
