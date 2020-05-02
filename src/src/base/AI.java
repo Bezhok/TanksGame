@@ -10,6 +10,8 @@ public class AI {
     }
 
     double timer = 0;
+
+    double prevShotDelta = 0;
     public void update(double dTime, final Tank target) {
         timer += dTime;
 
@@ -18,7 +20,7 @@ public class AI {
         double bulletPos = tank.getPos().x - tank.getPower()*tank.getPower()*2*tank.gun.getDir().x*tank.gun.getDir().y/198+50;
         double delta = target.getPos().x - bulletPos;
 
-        System.out.println(bulletPos + " " + target.getPos().x + " " + delta);
+//        System.out.println(bulletPos + " " + target.getPos().x + " " + delta);
         if (Math.abs(delta) > 5) {
             tank.getMovement().getAcceleration().x = Math.signum(delta)*500;
             tank.getMovement().moveX(dTime);
@@ -27,9 +29,17 @@ public class AI {
         }
 
         if (timer > 1.0) {
+            System.out.println(Math.abs(prevShotDelta - delta));
+            if (Math.abs(prevShotDelta - delta) < 2 && Math.abs(delta) > 5) {
+                tank.gun.updateAngle(Math.signum(delta)*0.1);
+            }
+
 
             tank.makeShot();
             timer = 0;
+
+
+            prevShotDelta = delta;
         }
     }
 }
