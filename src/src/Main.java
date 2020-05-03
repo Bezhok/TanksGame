@@ -6,6 +6,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import src.base.Collider;
 import src.base.Vector2d;
@@ -14,6 +16,7 @@ import src.gameobject.Enemy;
 import src.gameobject.GameObject;
 import src.gameobject.Player;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Main extends Application {
@@ -49,7 +52,7 @@ public class Main extends Application {
 
 
         player = new Player();
-        player.setPos(new Vector2d(400, height / 2 + 35));
+        player.setPos(new Vector2d(100, height / 2 + 35));
         player.gun.setGc(gc);
 
         Enemy enemy = new Enemy(player);
@@ -76,7 +79,7 @@ public class Main extends Application {
         Block wall3 = new Block();
         wall3.setPos(new Vector2d(width / 2.0 + 150, height / 2));
         wall3.setSize(new Vector2d(20, height * 2.0 / 8.0));
-        gameObjects.add(wall3);
+//        gameObjects.add(wall3);
 
         Block wall4 = new Block();
         wall4.setPos(new Vector2d(width / 2.0 + 360, height / 2  - 150));
@@ -105,6 +108,19 @@ public class Main extends Application {
             obj.start();
         }
 
+//
+//
+//       String musicFile = "expl.wav";     // For example
+//
+//        Media sound = new Media(
+//        new File("resources/" + musicFile).toURI().toString());
+//
+//        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+//
+//            mediaPlayer.play();
+
+
+
         new AnimationTimer() {
             private long lastUpdate = 0;
 
@@ -115,6 +131,7 @@ public class Main extends Application {
         }.start();
 
         stage.show();
+
     }
 
     void update(double dTime) {
@@ -135,7 +152,7 @@ public class Main extends Application {
         for (var obj: temporyGameObjects) {
             obj.draw();
         }
-        gc.fillText(Double.toString(player.getPower()), 10, 10);
+        gc.fillText(Double.toString(player.getCurrPower()), 10, 10);
 
         gameObjects.addAll(gameObjectsTemp);
         gameObjectsTemp.clear();

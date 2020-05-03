@@ -27,7 +27,7 @@ public class AI {
        currPos.copy(bullet.getPos());
 
        if (prevBulletPos != null) {
-           System.out.println(currPos.y + " " + prevBulletPos.y + " " + target.getPos().y);
+           //System.out.println(currPos.y + " " + prevBulletPos.y + " " + target.getPos().y);
            if (Math.abs(currPos.y - prevBulletPos.y) < 5 && Math.abs(currPos.y - target.getPos().y) > 15) {
                miss = true;
 //               tank.setPower(tank.getPower() + 20);
@@ -36,7 +36,7 @@ public class AI {
            }
        }
        if (currPos.x < 10) {
-           tank.setPower(tank.getPower() - 10);
+           tank.setCurrPower(tank.getCurrPower() - 10);
        }
 
        prevBulletPos = currPos;
@@ -53,7 +53,7 @@ public class AI {
 
 
 
-        double bulletPos = tank.getPos().x - tank.getPower()*tank.getPower()*2*tank.gun.getDir().x*tank.gun.getDir().y/198+50;
+        double bulletPos = tank.getPos().x - tank.getCurrPower()*tank.getCurrPower()*2*tank.gun.getDir().x*tank.gun.getDir().y/198+50;
         double delta = target.getPos().x - bulletPos;
 
 //        System.out.println(bulletPos + " " + target.getPos().x + " " + delta);

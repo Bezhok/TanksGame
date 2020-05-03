@@ -7,7 +7,6 @@ public class Tank extends GameObject implements BulletGenerator {
     public Gun gun = new Gun();
     protected Movement movement;
     protected Health health;
-    double power = 350;
 
 
     public Tank() {
@@ -23,8 +22,9 @@ public class Tank extends GameObject implements BulletGenerator {
         renderer.getPos().copy(pos);
         collider.getPos().copy(pos);
 
-        health.getPos().x = pos.x - renderer.getSprite().getSize().x / 2.0;
-        health.getPos().y = pos.y - renderer.getSprite().getSize().y / 2.0 - 10;
+        power.getPos().x = health.getPos().x = pos.x - renderer.getSprite().getSize().x / 2.0;
+        power.getPos().y = health.getPos().y = pos.y - renderer.getSprite().getSize().y / 2.0 - 10;
+        power.getPos().y -= 10;
     }
 
     @Override
@@ -34,6 +34,8 @@ public class Tank extends GameObject implements BulletGenerator {
         size.y = renderer.getSprite().getSize().y;
 
         health = new Health(100, size.x);
+        power = new Power(100, 500, 350, size.x);
+
         updateComponentsPos();
         collider.getSize().copy(size);
     }
@@ -84,14 +86,17 @@ public class Tank extends GameObject implements BulletGenerator {
         renderer.draw();
         gun.draw();
         health.draw();
+        power.draw();
     }
 
-    public double getPower() {
-        return power;
+    public int getCurrPower() {
+        return power.curr;
     }
 
-    public void setPower(double power) {
-        this.power = Math.min(Math.max(power, 100), 500);
+    Power power;
+
+    public void setCurrPower(int currPower) {
+        power.curr = Math.min(Math.max(currPower, power.min), power.max);
     }
 
     public void makeShot() {
@@ -103,7 +108,7 @@ public class Tank extends GameObject implements BulletGenerator {
         bulletStartPoint.y += gun.getDir().y * gun.getGunLen();
 
         bullet.setPos(bulletStartPoint);
-        bullet.setStartVelocity(gun.getDir(), power);
+        bullet.setStartVelocity(gun.getDir(), power.curr);
 
         bullet.getRenderer().setGc(Main.gc);
 

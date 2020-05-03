@@ -21,7 +21,7 @@ public class TemporaryEffect extends GameObject {
     int randomInt;
     @Override
     public void start() {
-        renderer.setSprite(new Sprite("explosion3.png", scale));
+        renderer.setSprite(new Sprite("explosion4.png", scale));
 
         renderer.getPos().copy(pos);
 

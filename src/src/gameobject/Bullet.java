@@ -17,6 +17,8 @@ public class Bullet extends GameObject {
         movement.setVelocity(new Vector2d(vector2d.x*power, vector2d.y*power));
     }
 
+    Audio explosionAudio;
+
     public Bullet() {
         movement = new Movement(this);
         movement.setResistance(0.002);
@@ -24,6 +26,8 @@ public class Bullet extends GameObject {
         movement.getMaxSpeed().x = 10000;
         movement.getMaxSpeed().y = 10000;
         movement.getAcceleration().y = 198;
+
+        explosionAudio = new Audio("expl.mp3", 0.02);
     }
 
     @Override
@@ -85,5 +89,7 @@ public class Bullet extends GameObject {
         if (creator != null) {
             creator.onBulletDestroyed(this);
         }
+
+        explosionAudio.play();
     }
 }

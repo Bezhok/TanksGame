@@ -39,12 +39,13 @@ public class Player extends Tank implements Observer {
                 break;
             case Z:
                 if (event.isStart)
-                    setPower(power - 5);
+                    setCurrPower(power.curr - 10);
                 break;
             case X:
                 if (event.isStart)
-                    setPower(power + 5);
+                    setCurrPower(power.curr + 10);
                 break;
         }
     }
+
 }
