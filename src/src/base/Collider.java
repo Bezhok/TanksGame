@@ -53,22 +53,33 @@ public class Collider {
     }
 
     public ArrayList<GameObject> collided() {
-        boolean wasCollision = false;
         var collidedWith = new ArrayList<GameObject>();
         for (var collider: colliders) {
             if (collider != this) {
                 if (this.intersects(collider)) {
-                    collider.gameObject.onCollision(this);
-                    gameObject.onCollision(collider);
+//                    collider.gameObject.onCollision(this);
+//                    gameObject.onCollision(collider);
 
                     collidedWith.add(collider.gameObject);
-                    wasCollision = true;
                 }
             }
         }
 
         Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
-//        return wasCollision;
+
         return collidedWith;
+    }
+
+    public static void processCollision() {
+        for (int i = 0; i < colliders.size(); i++) {
+            for (int j = i+1; j < colliders.size(); j++) {
+                if (colliders.get(i).intersects(colliders.get(j))) {
+                    colliders.get(i).gameObject.onCollision(colliders.get(j));
+                    colliders.get(j).gameObject.onCollision(colliders.get(i));
+                }
+            }
+        }
+
+        Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
     }
 }

@@ -88,7 +88,6 @@ public class Main extends Application {
 
         stage.setMaximized(true);
 
-
         stage.show();
         width = (int) stage.getWidth();
         height = (int) stage.getHeight();
@@ -119,6 +118,7 @@ public class Main extends Application {
         gameObjectsBuffer.clear();
 
         gameObjects.removeIf(GameObject::wasDestroyed);
-        Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
+        Collider.processCollision();
+        //Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
     }
 }

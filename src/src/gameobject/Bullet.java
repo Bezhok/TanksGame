@@ -70,11 +70,6 @@ public class Bullet extends GameObject {
     @Override
     public void onCollision(Collider another) {
         if (wasDestroyed) return;
-
-        if (collider.getGameObject() instanceof Enemy) {
-            // destroy enemy
-        }
-
         destroy();
     }
 

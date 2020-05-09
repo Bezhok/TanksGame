@@ -121,10 +121,9 @@ public class Tank extends GameObject implements BulletGenerator {
     public void onCollision(Collider other) {
         if (other.getGameObject() instanceof Bullet) {
             System.out.println(health.curr);
-            health.curr -= 10;
+            health.curr -= 30;
 
         }
-
     }
 
     @Override
