@@ -11,8 +11,12 @@ public class Tank extends GameObject implements BulletGenerator {
 
     public Tank() {
         movement = new Movement(this);
-    }
 
+        renderer.setSprite(new Sprite("tank2.png", 50));
+        size.x = renderer.getSprite().getSize().x;
+        size.y = renderer.getSprite().getSize().y;
+    }
+                                                
     public Movement getMovement() {
         return movement;
     }
@@ -29,9 +33,7 @@ public class Tank extends GameObject implements BulletGenerator {
 
     @Override
     public void start() {
-        renderer.setSprite(new Sprite("tank2.png", 50));
-        size.x = renderer.getSprite().getSize().x;
-        size.y = renderer.getSprite().getSize().y;
+
 
         health = new Health(100, size.x);
         power = new Power(100, 500, 350, size.x);
@@ -137,8 +139,5 @@ public class Tank extends GameObject implements BulletGenerator {
         Main.gameObjectsBuffer.add(temporaryEffect);
     }
 
-    @Override
-    public Vector2d getSize() {
-        return collider.getSize();
-    }
+
 }

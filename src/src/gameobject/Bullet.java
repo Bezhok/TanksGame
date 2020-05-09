@@ -28,13 +28,13 @@ public class Bullet extends GameObject {
         movement.getMaxSpeed().y = 10000;
         movement.getAcceleration().y = 198;
 
+        renderer.setSprite(new Sprite("bullet.png", 10));
+
         explosionAudio = new Audio("expl.mp3", 0.02);
     }
 
     @Override
     public void start() {
-        renderer.setSprite(new Sprite("bullet.png", 10));
-
         updateComponentsPos();
         collider.getSize().copy(new Vector2d(5, 5));
     }

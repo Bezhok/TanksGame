@@ -41,24 +41,10 @@ public class Main extends Application {
         theScene = new Scene(root);
         stage.setScene(theScene);
 
-
         launch(stage);
 
 
         double shiftY = 22;
-
-        Player player = new Player();
-        player.setPos(new Vector2d(100, height / 2 + shiftY));
-
-        Enemy enemy = new Enemy(player);
-        enemy.setPos(new Vector2d(800, height / 2 + shiftY));
-
-        Enemy enemy2 = new Enemy(player);
-        enemy2.setPos(new Vector2d(500, height / 2 + shiftY));
-
-        Enemy enemy3 = new Enemy(player);
-        enemy3.setPos(new Vector2d(1320, height / 2 - 150 - 25));
-
 
         Block wall = new Block();
         wall.setPos(new Vector2d(width / 2.0, height * 2.0 / 3 + 100));
@@ -71,7 +57,6 @@ public class Main extends Application {
         Block wall3 = new Block();
         wall3.setPos(new Vector2d(width / 2.0 + 150, height / 2));
         wall3.setSize(new Vector2d(20, height * 2.0 / 8.0));
-//        gameObjects.add(wall3);
 
         Block wall4 = new Block();
         wall4.setPos(new Vector2d(width - 100 / 2, height / 2 - 150));
@@ -81,11 +66,23 @@ public class Main extends Application {
         Block wall5 = new Block();
         wall5.setPos(new Vector2d(width - 100, height / 2 - 160));
         wall5.setSize(new Vector2d(20, 40));
-        gameObjects.add(wall5);
 
+
+        Player player = new Player();
+        placeOn(player, wall, 100);
+
+        Enemy enemy = new Enemy(player);
+        placeOn(enemy, wall, 800);
+
+        Enemy enemy2 = new Enemy(player);
+        placeOn(enemy2, wall, 500);
+
+        Enemy enemy3 = new Enemy(player);
+        placeOn(enemy3, wall4, 1320);
+
+        gameObjects.add(wall5);
         gameObjects.add(wall);
         gameObjects.add(wall2);
-
         gameObjects.add(player);
         gameObjects.add(enemy);
         gameObjects.add(enemy2);
@@ -94,13 +91,12 @@ public class Main extends Application {
         inputHandler = new InputHandler(theScene);
         inputHandler.add(player);
 
-
         for (var obj : gameObjects) {
             obj.start();
         }
 
         playBackgroundMusic();
-        
+
         new AnimationTimer() {
             private long lastUpdate = 0;
 
@@ -111,7 +107,12 @@ public class Main extends Application {
             }
         }.start();
 
+
         Thread.sleep(2000);
+    }
+
+    private void placeOn(GameObject object, GameObject on, int x) {
+        object.setPos(new Vector2d(x, on.getPos().y-on.getSize().y/2-object.getSize().y/2));
     }
 
     private void playBackgroundMusic() {

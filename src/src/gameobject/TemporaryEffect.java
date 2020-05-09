@@ -16,17 +16,16 @@ public class TemporaryEffect extends GameObject {
         this.pos.copy(pos);
         this.lifeTimeSeconds = lifeTimeSeconds;
         this.scale = scale;
+
+        renderer.setSprite(new Sprite("explosion4.png", scale));
     }
 
     int randomInt;
     @Override
     public void start() {
-        renderer.setSprite(new Sprite("explosion4.png", scale));
-
         renderer.getPos().copy(pos);
 
         Random randomGenerator = new Random();
-
         randomInt = randomGenerator.nextInt(360) - 180;
     }
 
