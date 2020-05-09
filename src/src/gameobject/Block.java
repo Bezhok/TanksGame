@@ -1,8 +1,7 @@
 package src.gameobject;
 
-import javafx.scene.shape.Rectangle;
+import javafx.scene.canvas.GraphicsContext;
 import src.base.Sprite;
-import src.base.Vector2d;
 
 public class Block extends GameObject {
     @Override
@@ -24,7 +23,7 @@ public class Block extends GameObject {
     }
 
     @Override
-    public void draw() {
-        renderer.draw();
+    public void draw(GraphicsContext gc) {
+        renderer.draw(gc);
     }
 }

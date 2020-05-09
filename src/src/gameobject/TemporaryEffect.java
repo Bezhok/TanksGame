@@ -47,13 +47,13 @@ public class TemporaryEffect extends GameObject {
     }
 
     @Override
-    public void draw() {
-        renderer.getGc().save();
+    public void draw(GraphicsContext gc) {
+        gc.save();
 
 
-        rotate(renderer.getGc(), randomInt, pos.x, pos.y);
+        rotate(gc, randomInt, pos.x, pos.y);
 
-        renderer.draw();
-        renderer.getGc().restore();
+        renderer.draw(gc);
+        gc.restore();
     }
 }

@@ -4,15 +4,11 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Renderer {
     Sprite sprite;
-    GraphicsContext gc;
+
     private Vector2d pos = new Vector2d();
 
     public Vector2d getPos() {
         return pos;
-    }
-
-    public GraphicsContext getGc() {
-        return gc;
     }
 
     public void setPos(Vector2d pos) {
@@ -27,11 +23,8 @@ public class Renderer {
         this.sprite = sprite;
     }
 
-    public void setGc(GraphicsContext gc) {
-        this.gc = gc;
-    }
 
-    public void draw() {
+    public void draw(GraphicsContext gc) {
         gc.drawImage(sprite.getImage(), pos.x - sprite.getSize().x / 2.0, pos.y - sprite.getSize().y / 2.0);
     }
 }

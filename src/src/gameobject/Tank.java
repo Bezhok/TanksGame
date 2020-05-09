@@ -1,5 +1,6 @@
 package src.gameobject;
 
+import javafx.scene.canvas.GraphicsContext;
 import src.Main;
 import src.base.*;
 
@@ -7,7 +8,6 @@ public class Tank extends GameObject implements BulletGenerator {
     public Gun gun = new Gun();
     protected Movement movement;
     protected Health health;
-
 
     public Tank() {
         movement = new Movement(this);
@@ -68,7 +68,7 @@ public class Tank extends GameObject implements BulletGenerator {
         }
 
         if (pos.x <= 0) pos.x = 1;
-        if (pos.x >= 800) pos.x = 800;
+        if (pos.x >= Main.width) pos.x = Main.width;
 
         updateComponentsPos();
     }
@@ -82,11 +82,11 @@ public class Tank extends GameObject implements BulletGenerator {
     }
 
     @Override
-    public void draw() {
-        renderer.draw();
-        gun.draw();
-        health.draw();
-        power.draw();
+    public void draw(GraphicsContext gc) {
+        renderer.draw(gc);
+        gun.draw(gc);
+        health.draw(gc);
+        power.draw(gc);
     }
 
     public int getCurrPower() {
@@ -101,7 +101,7 @@ public class Tank extends GameObject implements BulletGenerator {
 
     public void makeShot() {
         Bullet bullet = new Bullet();
-        Main.gameObjectsTemp.add(bullet);
+        Main.gameObjectsBuffer.add(bullet);
 
         var bulletStartPoint = new Vector2d(gun.getPos().x, gun.getPos().y);
         bulletStartPoint.x += gun.getDir().x * gun.getGunLen();
@@ -110,7 +110,6 @@ public class Tank extends GameObject implements BulletGenerator {
         bullet.setPos(bulletStartPoint);
         bullet.setStartVelocity(gun.getDir(), power.curr);
 
-        bullet.getRenderer().setGc(Main.gc);
 
         bullet.setCreator(this);
         bullet.start();
@@ -134,8 +133,12 @@ public class Tank extends GameObject implements BulletGenerator {
         super.destroy();
 
         TemporaryEffect temporaryEffect = new TemporaryEffect(pos, 0.2, 100);
-        temporaryEffect.getRenderer().setGc(Main.gc);
         temporaryEffect.start();
-        Main.temporyGameObjects.add(temporaryEffect);
+        Main.gameObjectsBuffer.add(temporaryEffect);
+    }
+
+    @Override
+    public Vector2d getSize() {
+        return collider.getSize();
     }
 }

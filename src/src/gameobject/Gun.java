@@ -19,7 +19,7 @@ public class Gun extends GameObject {
 
     private Vector2d dir = new Vector2d(Math.cos(0), Math.sin(0));
     private double angle = 0;
-    private GraphicsContext gc;
+
 
     public void setColor(Color color) {
         this.color = color;
@@ -37,9 +37,6 @@ public class Gun extends GameObject {
         this.angle = angle;
     }
 
-    public void setGc(GraphicsContext gc) {
-        this.gc = gc;
-    }
 
     public void updateAngle(double dAngle) {
         angle += dAngle;
@@ -61,7 +58,7 @@ public class Gun extends GameObject {
     }
 
     @Override
-    public void draw() {
+    public void draw(GraphicsContext gc) {
         gc.setStroke(color);
         gc.setLineWidth(lineWidth);
         gc.strokeLine(pos.x, pos.y, pos.x + dir.x * gunLen, pos.y + dir.y * gunLen);

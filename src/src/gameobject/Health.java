@@ -1,8 +1,8 @@
 package src.gameobject;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import src.Main;
-import src.base.Vector2d;
 
 public class Health extends GameObject {
     int max;
@@ -26,8 +26,7 @@ public class Health extends GameObject {
     }
 
     @Override
-    public void draw() {
-        var gc = Main.gc;
+    public void draw(GraphicsContext gc) {
         gc.setStroke(Color.RED);
         gc.setLineWidth(5);
 

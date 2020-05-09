@@ -1,5 +1,6 @@
 package src.gameobject;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import src.Main;
 
@@ -26,8 +27,7 @@ public class Power extends GameObject {
     }
 
     @Override
-    public void draw() {
-        var gc = Main.gc;
+    public void draw(GraphicsContext gc) {
         gc.setStroke(Color.BLUE);
         gc.setLineWidth(5);
 

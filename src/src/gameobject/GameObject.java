@@ -1,9 +1,9 @@
 package src.gameobject;
 
+import javafx.scene.canvas.GraphicsContext;
 import src.base.Collider;
 import src.base.Renderer;
 import src.base.Vector2d;
-import src.base.Vector2i;
 
 public abstract class GameObject {
     protected Vector2d pos = new Vector2d();
@@ -51,17 +51,9 @@ public abstract class GameObject {
     Vector2d size = new Vector2d();
     Collider collider ;
 
-    public Renderer getRenderer() {
-        return renderer;
-    }
-
-    public void setRenderer(Renderer renderer) {
-        this.renderer = renderer;
-    }
-
     Renderer renderer = new Renderer();
 
     public void start() {}
     abstract public void update(double dTime);
-    abstract public void draw();
+    abstract public void draw(GraphicsContext gc);
 }

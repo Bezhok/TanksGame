@@ -1,5 +1,6 @@
 package src.gameobject;
 
+import javafx.scene.canvas.GraphicsContext;
 import src.Main;
 import src.base.*;
 
@@ -55,15 +56,15 @@ public class Bullet extends GameObject {
             movement.getVelocity().x = 0;
         }
 
-        if (pos.x <= 0) pos.x = 1;
-        if (pos.x >= 800) pos.x = 800;
+        if (pos.x <= 0) destroy();
+        if (pos.x >= Main.width) destroy();
 
         updateComponentsPos();
     }
 
     @Override
-    public void draw() {
-        renderer.draw();
+    public void draw(GraphicsContext gc) {
+        renderer.draw(gc);
     }
 
     @Override
@@ -82,9 +83,8 @@ public class Bullet extends GameObject {
         super.destroy();
 
         TemporaryEffect temporaryEffect = new TemporaryEffect(pos, 0.2, 30);
-        temporaryEffect.getRenderer().setGc(Main.gc);
         temporaryEffect.start();
-        Main.temporyGameObjects.add(temporaryEffect);
+        Main.gameObjectsBuffer.add(temporaryEffect);
 
         if (creator != null) {
             creator.onBulletDestroyed(this);
