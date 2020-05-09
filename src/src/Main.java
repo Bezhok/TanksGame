@@ -99,6 +99,8 @@ public class Main extends Application {
             obj.start();
         }
 
+        playBackgroundMusic();
+        
         new AnimationTimer() {
             private long lastUpdate = 0;
 
@@ -112,6 +114,12 @@ public class Main extends Application {
         Thread.sleep(2000);
     }
 
+    private void playBackgroundMusic() {
+        String musicFile = "background.mp3";
+        mediaPlayer = new MediaPlayer(new Media(new File("resources/" + musicFile).toURI().toString()));
+        mediaPlayer.setVolume(0.1);
+        mediaPlayer.play();
+    }
 
     private void launch(Stage stage) {
         Canvas canvas = new Canvas(width, height);
