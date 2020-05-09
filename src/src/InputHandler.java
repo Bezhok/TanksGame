@@ -29,6 +29,10 @@ public class InputHandler implements Subject {
         });
     }
 
+    public void clear() {
+        observers.clear();
+    }
+
     @Override
     public void add(Observer observer) {
         observers.add(observer);

@@ -33,7 +33,7 @@ public abstract class GameObject {
         return wasDestroyed;
     }
 
-    void destroy() {
+    public void destroy() {
         wasDestroyed = true;
     }
 

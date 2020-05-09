@@ -79,7 +79,7 @@ public class Bullet extends GameObject {
     }
 
     @Override
-    void destroy() {
+    public void destroy() {
         super.destroy();
 
         TemporaryEffect temporaryEffect = new TemporaryEffect(pos, 0.2, 30);
