@@ -8,18 +8,20 @@ public class Gun extends GameObject {
     private Color color = Color.BLACK;
     private int lineWidth = 5;
     private double gunLen = 30;
+    private final Vector2d dir = new Vector2d(Math.cos(0), Math.sin(0));
+    private double angle = 0;
 
     public double getGunLen() {
         return gunLen;
     }
 
+    public void setGunLen(double gunLen) {
+        this.gunLen = gunLen;
+    }
+
     public Vector2d getDir() {
         return dir;
     }
-
-    private Vector2d dir = new Vector2d(Math.cos(0), Math.sin(0));
-    private double angle = 0;
-
 
     public void setColor(Color color) {
         this.color = color;
@@ -29,14 +31,9 @@ public class Gun extends GameObject {
         this.lineWidth = lineWidth;
     }
 
-    public void setGunLen(double gunLen) {
-        this.gunLen = gunLen;
-    }
-
     public void setAngle(double angle) {
         this.angle = angle;
     }
-
 
     public void updateAngle(double dAngle) {
         angle += dAngle;

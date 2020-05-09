@@ -11,13 +11,13 @@ public class TemporaryEffect extends GameObject {
     double lifeTimeSeconds;
 
     int scale = 30;
-    public TemporaryEffect(Vector2d pos, double lifeTimeSeconds, int scale) {
+    public TemporaryEffect(String spriteName, Vector2d pos, double lifeTimeSeconds, int scale) {
         super(false);
         this.pos.copy(pos);
         this.lifeTimeSeconds = lifeTimeSeconds;
         this.scale = scale;
 
-        renderer.setSprite(new Sprite("explosion4.png", scale));
+        renderer.setSprite(new Sprite(spriteName, scale));
     }
 
     int randomInt;

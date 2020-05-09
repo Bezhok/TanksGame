@@ -7,8 +7,8 @@ public class Enemy extends Tank {
     private AI ai;
     Tank target;
 
-    public Enemy(Tank target) {
-        super();
+    public Enemy(String spiteName, Tank target) {
+        super(spiteName);
         this.target = target;
         ai = new AI(this);
         ai.setTarget(target);

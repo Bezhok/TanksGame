@@ -9,10 +9,10 @@ public class Tank extends GameObject implements BulletGenerator {
     protected Movement movement;
     protected Health health;
 
-    public Tank() {
+    public Tank(String spriteName) {
         movement = new Movement(this);
 
-        renderer.setSprite(new Sprite("tank2.png", 50));
+        renderer.setSprite(new Sprite(spriteName, 50));
         size.x = renderer.getSprite().getSize().x;
         size.y = renderer.getSprite().getSize().y;
     }
@@ -33,8 +33,6 @@ public class Tank extends GameObject implements BulletGenerator {
 
     @Override
     public void start() {
-
-
         health = new Health(100, size.x);
         power = new Power(100, 500, 350, size.x);
 
@@ -102,7 +100,7 @@ public class Tank extends GameObject implements BulletGenerator {
     }
 
     public void makeShot() {
-        Bullet bullet = new Bullet();
+        Bullet bullet = new Bullet("bullet.png");
         Main.gameObjectsBuffer.add(bullet);
 
         var bulletStartPoint = new Vector2d(gun.getPos().x, gun.getPos().y);
@@ -120,9 +118,7 @@ public class Tank extends GameObject implements BulletGenerator {
     @Override
     public void onCollision(Collider other) {
         if (other.getGameObject() instanceof Bullet) {
-            System.out.println(health.curr);
             health.curr -= 30;
-
         }
     }
 
@@ -133,10 +129,8 @@ public class Tank extends GameObject implements BulletGenerator {
     public void destroy() {
         super.destroy();
 
-        TemporaryEffect temporaryEffect = new TemporaryEffect(pos, 0.2, 100);
+        TemporaryEffect temporaryEffect = new TemporaryEffect("explosion4.png", pos, 0.2, 100);
         temporaryEffect.start();
         Main.gameObjectsBuffer.add(temporaryEffect);
     }
-
-
 }

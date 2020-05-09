@@ -20,7 +20,7 @@ public class Bullet extends GameObject {
 
     Audio explosionAudio;
 
-    public Bullet() {
+    public Bullet(String spriteName) {
         movement = new Movement(this);
         movement.setResistance(0.002);
 
@@ -28,7 +28,7 @@ public class Bullet extends GameObject {
         movement.getMaxSpeed().y = 10000;
         movement.getAcceleration().y = 198;
 
-        renderer.setSprite(new Sprite("bullet.png", 10));
+        renderer.setSprite(new Sprite(spriteName, 10));
 
         explosionAudio = new Audio("expl.mp3", 0.02);
     }
@@ -77,7 +77,7 @@ public class Bullet extends GameObject {
     public void destroy() {
         super.destroy();
 
-        TemporaryEffect temporaryEffect = new TemporaryEffect(pos, 0.2, 30);
+        TemporaryEffect temporaryEffect = new TemporaryEffect("explosion4.png", pos, 0.2, 30);
         temporaryEffect.start();
         Main.gameObjectsBuffer.add(temporaryEffect);
 

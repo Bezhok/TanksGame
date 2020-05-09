@@ -4,7 +4,9 @@ import src.base.InputEvent;
 import src.observer.Observer;
 
 public class Player extends Tank implements Observer {
-
+    public Player(String spriteName) {
+        super(spriteName);
+    }
     @Override
     public void onNotify(InputEvent event) {
         var keyEvent = event.keyEvent;

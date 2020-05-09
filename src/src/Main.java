@@ -2,27 +2,34 @@ package src;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import src.base.Collider;
 import src.base.Levels;
 import src.gameobject.Enemy;
 import src.gameobject.GameObject;
+import src.gameobject.Player;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class Main extends Application {
-    static public int width = 800;
-    static public int height = 600;
+    static public int width;
+    static public int height;
     public static ArrayList<GameObject> gameObjectsBuffer = new ArrayList<>();
+    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
+    double timer = 0;
+    boolean isPaused = false;
     private MediaPlayer backgroundPlayer;
-    private ArrayList<GameObject> gameObjects = new ArrayList<>();
     private GraphicsContext gc;
     private InputHandler inputHandler;
     private Group root;
@@ -44,11 +51,6 @@ public class Main extends Application {
 
         levels = new Levels();
         inputHandler = new InputHandler(theScene);
-
-
-        levels.loadNext(inputHandler);
-        clearScene();
-
         playBackgroundMusic();
 
         new AnimationTimer() {
@@ -60,9 +62,6 @@ public class Main extends Application {
                 lastUpdate = currentNanoTime;
             }
         }.start();
-
-
-        Thread.sleep(2000);
     }
 
     private void clearScene() {
@@ -87,7 +86,7 @@ public class Main extends Application {
         gc = canvas.getGraphicsContext2D();
 
         stage.setMaximized(true);
-
+        stage.setResizable(false);
         stage.show();
         width = (int) stage.getWidth();
         height = (int) stage.getHeight();
@@ -99,26 +98,61 @@ public class Main extends Application {
     private void update(double dTime) {
         gc.clearRect(0, 0, width, height);
 
-        boolean isEnemyExists = false;
-        for (var obj : gameObjects) {
-            if (obj instanceof Enemy) isEnemyExists = true;
-            obj.update(dTime);
+        boolean shouldStartNewLevel = false;
+
+        if (!isPaused) {
+            boolean isEnemyExists = false;
+            boolean isPlayerExists = false;
+            for (var obj : gameObjects) {
+                if (obj instanceof Enemy) isEnemyExists = true;
+                if (obj instanceof Player) isPlayerExists = true;
+                obj.update(dTime);
+            }
+
+            if (!isPlayerExists) {
+                levels.reset();
+                shouldStartNewLevel = true;
+            }
+            if (!isEnemyExists) {
+                shouldStartNewLevel = true;
+            }
         }
 
-        if (!isEnemyExists) {
+        if (isPaused) {
+            timer += dTime;
+            gc.setTextAlign(TextAlignment.CENTER);
+            gc.setTextBaseline(VPos.CENTER);
+            gc.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
+
+            int levelIdx = levels.getCurrLevel() + 1;
+            gc.fillText(
+                    "level " + levelIdx,
+                    width / 2,
+                    height / 2
+            );
+
+        } else if (shouldStartNewLevel) {
             clearScene();
             levels.loadNext(inputHandler);
+            isPaused = true;
         }
 
-        for (var obj : gameObjects) {
-            obj.draw(gc);
+        if (timer >= 2) {
+            isPaused = false;
         }
 
-        gameObjects.addAll(gameObjectsBuffer);
-        gameObjectsBuffer.clear();
+        if (!isPaused) {
+            isPaused = false;
+            timer = 0;
+            for (var obj : gameObjects) {
+                obj.draw(gc);
+            }
 
-        gameObjects.removeIf(GameObject::wasDestroyed);
-        Collider.processCollision();
-        //Collider.getColliders().removeIf(collider -> collider.getGameObject().wasDestroyed());
+            gameObjects.addAll(gameObjectsBuffer);
+            gameObjectsBuffer.clear();
+
+            Collider.processCollision();
+            gameObjects.removeIf(GameObject::wasDestroyed);
+        }
     }
 }
