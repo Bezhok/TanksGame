@@ -2,12 +2,17 @@ package src.gameobject;
 
 import javafx.scene.canvas.GraphicsContext;
 import src.Main;
-import src.base.*;
+import src.base.BulletGenerator;
+import src.base.Collider;
+import src.base.Movement;
+import src.base.Sprite;
+import src.base.math.Vector2d;
 
 public class Tank extends GameObject implements BulletGenerator {
     public Gun gun = new Gun();
     protected Movement movement;
     protected Health health;
+    Power power;
 
     public Tank(String spriteName) {
         movement = new Movement(this);
@@ -16,7 +21,7 @@ public class Tank extends GameObject implements BulletGenerator {
         size.x = renderer.getSprite().getSize().x;
         size.y = renderer.getSprite().getSize().y;
     }
-                                                
+
     public Movement getMovement() {
         return movement;
     }
@@ -45,7 +50,7 @@ public class Tank extends GameObject implements BulletGenerator {
 
         double deltaX = movement.moveX(dTime);
 
-        var collidedWith = collider.collided();
+        var collidedWith = collider.collidedWith();
         boolean isCollided = false;
 
         for (var c : collidedWith) {
@@ -55,9 +60,9 @@ public class Tank extends GameObject implements BulletGenerator {
 
                 if (collider.getPos().x < aCollider.getPos().x) {
                     pos.x = aCollider.
-                            getPos().x - aCollider.getSize().x / 2 - collider.getSize().x / 2;
+                            getPos().x - aCollider.getSize().x / 2 - collider.getSize().x / 2 - 1;
                 } else if (collider.getPos().x > aCollider.getPos().x) {
-                    pos.x = aCollider.getPos().x + aCollider.getSize().x / 2 + collider.getSize().x / 2;
+                    pos.x = aCollider.getPos().x + aCollider.getSize().x / 2 + collider.getSize().x / 2 + 1;
                 }
             }
         }
@@ -93,14 +98,12 @@ public class Tank extends GameObject implements BulletGenerator {
         return power.curr;
     }
 
-    Power power;
-
     public void setCurrPower(int currPower) {
         power.curr = Math.min(Math.max(currPower, power.min), power.max);
     }
 
     public void makeShot() {
-        Bullet bullet = new Bullet("bullet.png");
+        Bullet bullet = new Bullet("bullet3_3.png");
         Main.gameObjectsBuffer.add(bullet);
 
         var bulletStartPoint = new Vector2d(gun.getPos().x, gun.getPos().y);

@@ -2,7 +2,6 @@ package src.gameobject;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import src.Main;
 
 public class Health extends GameObject {
     int max;
@@ -16,6 +15,7 @@ public class Health extends GameObject {
         this.curr = max;
     }
 
+    @Override
     public void start() {
 
     }
@@ -31,6 +31,6 @@ public class Health extends GameObject {
         gc.setLineWidth(5);
 
         if (curr > 0)
-        gc.strokeLine(pos.x, pos.y, pos.x + curr/(double)max * healthViewLen, pos.y);
+            gc.strokeLine(pos.x, pos.y, pos.x + curr / (double) max * healthViewLen, pos.y);
     }
 }

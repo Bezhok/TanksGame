@@ -2,13 +2,13 @@ package src.gameobject;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import src.base.Vector2d;
+import src.base.math.Vector2d;
 
 public class Gun extends GameObject {
+    private final Vector2d dir = new Vector2d(Math.cos(0), Math.sin(0));
     private Color color = Color.BLACK;
     private int lineWidth = 5;
     private double gunLen = 30;
-    private final Vector2d dir = new Vector2d(Math.cos(0), Math.sin(0));
     private double angle = 0;
 
     public double getGunLen() {

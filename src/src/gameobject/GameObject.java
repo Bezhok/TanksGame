@@ -3,10 +3,27 @@ package src.gameobject;
 import javafx.scene.canvas.GraphicsContext;
 import src.base.Collider;
 import src.base.Renderer;
-import src.base.Vector2d;
+import src.base.math.Vector2d;
 
 public abstract class GameObject {
     protected Vector2d pos = new Vector2d();
+    protected boolean wasDestroyed = false;
+    protected Vector2d size = new Vector2d();
+    protected Collider collider;
+    protected Renderer renderer = new Renderer();
+
+    public GameObject() {
+        collider = new Collider(this);
+    }
+
+    public GameObject(boolean shouldCreateCollider) {
+        if (shouldCreateCollider)
+            collider = new Collider(this);
+    }
+
+    public GameObject(Vector2d pos) {
+        this.pos = pos;
+    }
 
     public Vector2d getPos() {
         return pos;
@@ -20,13 +37,8 @@ public abstract class GameObject {
         return size;
     }
 
-    public GameObject() {
-        collider =  new Collider(this);
-    }
-
-    public GameObject(boolean shouldCreateCollider) {
-        if (shouldCreateCollider)
-            collider =  new Collider(this);
+    public void setSize(Vector2d size) {
+        this.size = size;
     }
 
     public boolean wasDestroyed() {
@@ -37,23 +49,13 @@ public abstract class GameObject {
         wasDestroyed = true;
     }
 
-    protected boolean wasDestroyed = false;
-    public void onCollision(Collider another) {}
-
-    public GameObject(Vector2d pos) {
-        this.pos = pos;
+    public void onCollision(Collider another) {
     }
 
-    public void setSize(Vector2d size) {
-        this.size = size;
+    public void start() {
     }
 
-    Vector2d size = new Vector2d();
-    Collider collider ;
-
-    Renderer renderer = new Renderer();
-
-    public void start() {}
     abstract public void update(double dTime);
+
     abstract public void draw(GraphicsContext gc);
 }

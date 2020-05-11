@@ -6,7 +6,9 @@ import src.observer.Observer;
 public class Player extends Tank implements Observer {
     public Player(String spriteName) {
         super(spriteName);
+        gun.updateAngle(-0.5);
     }
+
     @Override
     public void onNotify(InputEvent event) {
         var keyEvent = event.keyEvent;
@@ -49,5 +51,4 @@ public class Player extends Tank implements Observer {
                 break;
         }
     }
-
 }

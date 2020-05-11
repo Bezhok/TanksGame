@@ -6,7 +6,7 @@ import src.base.Sprite;
 public class Block extends GameObject {
     @Override
     public void start() {
-        renderer.setSprite(new Sprite("ground.png", (int)size.x, (int)size.y));
+        renderer.setSprite(new Sprite("ground.png", (int) size.x, (int) size.y));
 
         updateComponentsPos();
         collider.getSize().copy(size);

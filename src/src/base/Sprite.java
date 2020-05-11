@@ -1,36 +1,41 @@
 package src.base;
 
 import javafx.scene.image.Image;
+import src.base.math.Vector2i;
 
 public class Sprite {
     private Image image;
-
-    public Vector2i getSize() {
-        return size;
-    }
-
     private Vector2i size = new Vector2i();
+    private final String spritesHome = "file:resources/";
 
     public Sprite(String name, int scale) {
-        image = new Image("file:resources/" + name);
+        image = new Image(spritesHome + name);
         var newSize = recalcSizes((int) image.getWidth(), (int) image.getHeight(), scale);
-        image = new Image("file:resources/" + name, newSize.x, newSize.y, false, false);
+        image = new Image(spritesHome + name, newSize.x, newSize.y, false, false);
 
         size = newSize;
     }
 
     public Sprite(String name) {
-        image = new Image("file:resources/" + name);
+        image = new Image(spritesHome + name);
 
         size.x = (int) image.getWidth();
         size.y = (int) image.getHeight();
     }
 
     public Sprite(String name, int width, int height) {
-        image = new Image("file:resources/" + name, width, height, false, false);
+        image = new Image(spritesHome + name, width, height, false, false);
 
         size.x = width;
         size.y = height;
+    }
+
+    public Vector2i getSize() {
+        return size;
+    }
+
+    public void setSize(Vector2i size) {
+        this.size = size;
     }
 
     public Image getImage() {
@@ -47,9 +52,5 @@ public class Sprite {
             res.y = (int) (imageHeight / (double) imageWidth * scale);
         }
         return res;
-    }
-
-    public void setSize(Vector2i size) {
-        this.size = size;
     }
 }

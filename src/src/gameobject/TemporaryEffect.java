@@ -3,14 +3,16 @@ package src.gameobject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Rotate;
 import src.base.Sprite;
-import src.base.Vector2d;
+import src.base.math.Vector2d;
 
 import java.util.Random;
 
 public class TemporaryEffect extends GameObject {
-    double lifeTimeSeconds;
+    private final double lifeTimeSeconds;
+    private int scale = 30;
+    private int randomInt;
+    private double totalTime = 0;
 
-    int scale = 30;
     public TemporaryEffect(String spriteName, Vector2d pos, double lifeTimeSeconds, int scale) {
         super(false);
         this.pos.copy(pos);
@@ -20,7 +22,6 @@ public class TemporaryEffect extends GameObject {
         renderer.setSprite(new Sprite(spriteName, scale));
     }
 
-    int randomInt;
     @Override
     public void start() {
         renderer.getPos().copy(pos);
@@ -29,8 +30,6 @@ public class TemporaryEffect extends GameObject {
         randomInt = randomGenerator.nextInt(360) - 180;
     }
 
-
-    double totalTime = 0;
     @Override
     public void update(double dTime) {
         totalTime += dTime;
@@ -49,10 +48,9 @@ public class TemporaryEffect extends GameObject {
     public void draw(GraphicsContext gc) {
         gc.save();
 
-
         rotate(gc, randomInt, pos.x, pos.y);
-
         renderer.draw(gc);
+
         gc.restore();
     }
 }

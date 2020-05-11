@@ -5,8 +5,8 @@ import javafx.scene.media.AudioClip;
 import java.io.File;
 
 public class Audio {
-    String filePath;
-    double volume = 1;
+    private final String filePath;
+    private double volume = 1;
 
     public Audio(String fileName, double volume) {
         this(fileName);

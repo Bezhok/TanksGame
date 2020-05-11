@@ -1,18 +1,16 @@
 package src.gameobject;
 
 import src.base.AI;
-import src.base.Vector2d;
 
 public class Enemy extends Tank {
-    private AI ai;
-    Tank target;
+    private final AI ai;
+    private final Tank target;
 
     public Enemy(String spiteName, Tank target) {
         super(spiteName);
         this.target = target;
         ai = new AI(this);
         ai.setTarget(target);
-//        gun.setAngle(-2);
         gun.updateAngle(-2);
     }
 
@@ -24,7 +22,6 @@ public class Enemy extends Tank {
     @Override
     public void update(double dTime) {
         super.update(dTime);
-
         ai.update(dTime);
     }
 }
