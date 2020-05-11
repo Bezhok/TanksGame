@@ -1,9 +1,11 @@
 package src.observer;
 
-import javafx.event.Event;
+import src.base.InputEvent;
 
 public interface Subject {
     void add(Observer observer);
+
     void remove(Observer observer);
-    void notifyAll(Event event);
+
+    void notifyAll(InputEvent event);
 }
