@@ -1,5 +1,5 @@
 # TanksGame
-A task for the university using Javafx.
+A task for the university using Javafx. Player against AI.
 # Controls
 | Key | Description |
 | ------ | ------ |
